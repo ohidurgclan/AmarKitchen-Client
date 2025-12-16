@@ -1,10 +1,12 @@
 import React from 'react';
+import Header from '../components/global/header/header';
 
 const ContactPage = () => {
     return (
-        <div>
-            Go To hell
-        </div>
+        <>
+          <Header/>
+          <div>I am Contact Page</div>
+        </>
     );
 };
 

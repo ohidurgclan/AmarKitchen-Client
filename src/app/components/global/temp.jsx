@@ -1,8 +1,4 @@
-import React from "react";
-
-const Header = () => {
-  return (
-    <header className="bg-white text-slate-900">
+<header className="bg-white text-slate-900">
       {/* TOP NAVBAR (white, thin bottom line, STICKY) */}
       <div className="sticky top-0 z-50 bg-white border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -127,7 +123,3 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
-
-export default Header;
