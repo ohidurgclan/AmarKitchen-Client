@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/global/header/header";
+import Header from "../../components/global/header/header";
 
 const SignupSelectionPage = () => {
   return (
