@@ -1,12 +1,10 @@
 import React from 'react';
-import Header from '../components/global/header/header';
 
 const AboutPage = () => {
     return (
-        <>  
-            <Header/>
-            <div>I am About Page</div>
-        </>
+        <div>
+            We are Cloud Kitchen Platform Name Amar Kitchen
+        </div>
     );
 };
 
