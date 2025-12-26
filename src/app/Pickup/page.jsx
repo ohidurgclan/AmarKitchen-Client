@@ -3,7 +3,7 @@
 
 import React, { useMemo, useState } from "react";
 import TopMenuBar from "../TopMenuBar/TopMenuBar";
-import Footer from "@/components/global/footer/footer";
+import Footer from "../components/global/footer/footer";
 const DHAKA_LOCATIONS = [
   "Mirpur",
   "Uttara",

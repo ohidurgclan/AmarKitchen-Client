@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import TopMenuBar from "@/app/TopMenuBar/TopMenuBar"; // ✅ update path if yours is different
 
 const CUISINES = [
   {
