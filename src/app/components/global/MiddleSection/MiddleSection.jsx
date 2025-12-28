@@ -1,7 +1,7 @@
 // app/(customer)/kitchen/MiddleSection.jsx
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const CUISINES = [
   {
@@ -111,7 +111,6 @@ export default function MiddleSection() {
 
   const shownRestaurants = useMemo(() => {
     const q = search.trim().toLowerCase();
-
     return RESTAURANTS.filter((r) => {
       const cuisineOk = selectedCuisine === "All" || r.cuisine === selectedCuisine;
       const searchOk =
@@ -125,8 +124,6 @@ export default function MiddleSection() {
 
   return (
     <div className="bg-white min-h-screen">
-      
-
       <main className="bg-white py-10">
         <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row gap-6">
           {/* LEFT FILTERS – lg+ */}

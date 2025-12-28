@@ -1,12 +1,27 @@
 // app/components/topmenubar.jsx
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const TopMenuBar = () => {
   const pathname = (usePathname() || "").toLowerCase();
+
+  // 1. Add mounted state to prevent hydration mismatch
+  const [mounted, setMounted] = useState(false);
+
+  // 2. Access cart items
+  const { items } = useSelector((state) => state.cart);
+
+  // 3. Set mounted to true after first render
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Calculate total quantity
+  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   const isActive = (href) => {
     const h = href.toLowerCase();
@@ -15,7 +30,6 @@ const TopMenuBar = () => {
 
   const linkClass = (href) => {
     const active = isActive(href);
-
     return `
       relative inline-flex items-center
       text-sm font-medium transition
@@ -31,6 +45,7 @@ const TopMenuBar = () => {
     <header className="bg-white text-slate-900">
       <div className="sticky top-0 z-50 bg-white border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <img
@@ -42,47 +57,31 @@ const TopMenuBar = () => {
 
           {/* Nav links */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/Homebar" className={linkClass("/Homebar")}>
-              Home
-            </Link>
-
-            <Link href="/Pickup" className={linkClass("/Pickup")}>
-              Pick-up
-            </Link>
-
-            <Link href="/Kitchen" className={linkClass("/Kitchen")}>
-              Kitchens
-            </Link>
-
-            <Link href="/AKmart" className={linkClass("/AKmart")}>
-              AKmart
-            </Link>
+            <Link href="/Home" className={linkClass("/Home")}>Home</Link>
+            <Link href="/Menus" className={linkClass("/Menus")}>Menus</Link>
+            <Link href="/Pickup" className={linkClass("/Pickup")}>Pick-up</Link>
+            <Link href="/Kitchen" className={linkClass("/Kitchen")}>Kitchens</Link>
+            <Link href="/AKmart" className={linkClass("/AKmart")}>AKmart</Link>
           </nav>
 
           {/* Auth + Cart */}
           <div className="flex items-center gap-3">
             <Link href="/SigninSelectionPage">
-              <button
-                type="button"
-                className="border border-orange-500 bg-white text-orange-600 text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-50 transition"
-              >
+              <button className="border border-orange-500 bg-white text-orange-600 text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-50 transition">
                 Sign In
               </button>
             </Link>
 
             <Link href="/SignupSelectionPage">
-              <button
-                type="button"
-                className="bg-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-600 transition"
-              >
+              <button className="bg-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-600 transition">
                 Sign Up
               </button>
             </Link>
 
-            <Link href="/cart">
+            <Link href="/Cart">
               <button
                 type="button"
-                className="border border-orange-300 bg-white text-orange-600 p-2 rounded-md hover:bg-orange-50 transition flex items-center justify-center"
+                className="relative border border-orange-300 bg-white text-orange-600 p-2 rounded-md hover:bg-orange-50 transition flex items-center justify-center"
                 aria-label="Cart"
               >
                 <svg
@@ -93,12 +92,15 @@ const TopMenuBar = () => {
                   stroke="currentColor"
                   strokeWidth="1.8"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l2-7H6.4M7 13L5.4 5M7 13l-1.5 6h12M9 21a1 1 0 11-2 0 1 1 0 012 0zm10 0a1 1 0 11-2 0 1 1 0 012 0z"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l2-7H6.4M7 13L5.4 5M7 13l-1.5 6h12M9 21a1 1 0 11-2 0 1 1 0 012 0zm10 0a1 1 0 11-2 0 1 1 0 012 0z" />
                 </svg>
+
+                {/* 4. Only show badge if mounted AND items exist */}
+                {mounted && totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-orange-600 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white animate-in zoom-in duration-300">
+                    {totalItems}
+                  </span>
+                )}
               </button>
             </Link>
           </div>
