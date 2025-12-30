@@ -55,13 +55,13 @@ const AdminOrder = ({ orders }) => {
                   <td className="py-3 px-4">{order.item_name}</td>
                   <td className="py-3 px-4">{order.quantity}</td>
 
-
+                 
 
                   <td className="py-3 px-4 font-semibold text-slate-900">
                     ৳ {Number(order.totalprice || 0).toLocaleString("en-BD")}
                   </td>
 
-                  <td className="py-3 px-4">
+                   <td className="py-3 px-4">
                     <span
                       className={`inline-flex px-2 py-1 rounded-full text-[11px] ${getStatusClasses(
                         order.totalprice

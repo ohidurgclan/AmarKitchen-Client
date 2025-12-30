@@ -98,12 +98,12 @@ const AdminKitchens = ({ kitchensPending = [], allKitchens = [] }) => {
               ) : (
                 allKitchens.map((k) => (
                   <tr key={k.id} className="hover:bg-slate-50">
-                    <td className="py-3 px-4 font-mono text-slate-800">#{k.id}</td>
+                    <td className="py-3 px-4 font-mono text-slate-800">#{k.kitchen_id}</td>
                     <td className="py-3 px-4">{k.name}</td>
 
                     <td className="py-3 px-4">
                       <span className="font-semibold text-slate-900">
-                        {typeof k.rating === "number" ? k.rating.toFixed(1) : "N/A"}
+                        {typeof k.ratings === "number" ? k.ratings.toFixed(1) : "N/A"}
                       </span>{" "}
                       <span className="text-xs text-slate-500">/ 5</span>
                     </td>

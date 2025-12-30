@@ -94,35 +94,35 @@ const revenueData = [
 const Page = () => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("dashboard");
-  const [orders, setOrders] = useState([]);
-  const [kitchens, setKitchens] = useState([]);
-  const [customers, setCustomer] = useState([]);
-  useEffect(() => {
-    async function fetchItems() {
-      const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
-      const data = await res.json();
-      setOrders(data.data);
-    }
-    fetchItems();
-  }, []);
+    const [orders, setOrders] = useState([]);
+    const [kitchens,setKitchens] = useState([]);
+    const [customers,setCustomer] = useState([]);
+    useEffect(() => {
+      async function fetchItems() {
+        const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
+        const data = await res.json();
+        setOrders(data.data);
+      }
+      fetchItems();
+    }, []);
 
-  useEffect(() => {
-    async function fetchKitchen() {
-      const res = await fetch("http://localhost:5085/v1/kitchen/allkitchens"); // via Next proxy
-      const data = await res.json();
-      setKitchens(data.data);
-    }
-    fetchKitchen();
-  }, []);
+    useEffect(() => {
+      async function fetchKitchen() {
+        const res = await fetch("http://localhost:5085/v1/kitchen/allkitchens"); // via Next proxy
+        const data = await res.json();
+        setKitchens(data.data);
+      }
+      fetchKitchen();
+    }, []);
 
-  useEffect(() => {
-    async function fetchCustomer() {
-      const res = await fetch("http://localhost:5085/v1/users/customer"); // via Next proxy
-      const data = await res.json();
-      setCustomer(data.data);
-    }
-    fetchCustomer();
-  }, []);
+    useEffect(() => {
+      async function fetchCustomer() {
+        const res = await fetch("http://localhost:5085/v1/users/customer"); // via Next proxy
+        const data = await res.json();
+        setCustomer(data.data);
+      }
+      fetchCustomer();
+    }, []);
 
   const handleLogout = () => {
     router.push("/");
