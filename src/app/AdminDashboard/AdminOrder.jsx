@@ -4,7 +4,23 @@
 import React from "react";
 import Link from "next/link";
 
-const AdminOrder = () => {
+// Receive orders as a prop
+const AdminOrder = ({ orders }) => {
+  console.log(orders); // logs the orders array for debugging
+
+  // Helper function to determine the order status classes
+  const getStatusClasses = (status) => {
+    switch (status) {
+      case "Delivered":
+        return "bg-green-50 text-green-700";
+      case "On the way":
+        return "bg-yellow-50 text-yellow-700";
+      case "Preparing":
+      default:
+        return "bg-slate-100 text-slate-700";
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 border border-orange-50">
       <h2 className="text-xl font-semibold text-slate-900 mb-4">Orders</h2>
@@ -15,10 +31,10 @@ const AdminOrder = () => {
             <tr>
               <th className="py-2 px-4">Order ID</th>
               <th className="py-2 px-4">Customer Name</th>
-              <th className="py-2 px-4">Kitchen Name</th>
-              <th className="py-2 px-4">Status</th>
+              <th className="py-2 px-4">Item Name</th>
+              <th className="py-2 px-4">Quantity</th>
               <th className="py-2 px-4">Amount</th>
-              <th className="py-2 px-4 text-center">Actions</th>
+              <th className="py-2 px-4 text-center">Status</th>
             </tr>
           </thead>
 
@@ -31,44 +47,28 @@ const AdminOrder = () => {
               </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order.id} className="hover:bg-slate-50">
+                <tr li key={order.order_id} className="hover:bg-slate-50">
                   <td className="py-3 px-4 font-mono text-sm text-slate-800">
-                    #{order.id}
+                    #{order.order_id}
                   </td>
-                  <td className="py-3 px-4">{order.customerName}</td>
-                  <td className="py-3 px-4">{order.kitchenName}</td>
+                  <td className="py-3 px-4">{order.user_name}</td>
+                  <td className="py-3 px-4">{order.item_name}</td>
+                  <td className="py-3 px-4">{order.quantity}</td>
 
-                  <td className="py-3 px-4">
+                 
+
+                  <td className="py-3 px-4 font-semibold text-slate-900">
+                    ৳ {Number(order.totalprice || 0).toLocaleString("en-BD")}
+                  </td>
+
+                   <td className="py-3 px-4">
                     <span
                       className={`inline-flex px-2 py-1 rounded-full text-[11px] ${getStatusClasses(
-                        order.status
+                        order.totalprice
                       )}`}
                     >
                       {order.status}
                     </span>
-                  </td>
-
-                  <td className="py-3 px-4 font-semibold text-slate-900">
-                    ৳ {Number(order.amount || 0).toLocaleString("en-BD")}
-                  </td>
-
-                  {/* ✅ Center aligned actions */}
-                  <td className="py-3 px-4 text-center">
-                    <div className="inline-flex gap-2">
-                      <Link
-                        href={`/admin/orders/${order.id}`}
-                        className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-1"
-                      >
-                        View
-                      </Link>
-
-                      <Link
-                        href={`/admin/orders/${order.id}/edit`}
-                        className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-1"
-                      >
-                        Edit
-                      </Link>
-                    </div>
                   </td>
                 </tr>
               ))
@@ -78,19 +78,6 @@ const AdminOrder = () => {
       </div>
     </div>
   );
-};
-
-// Helper function to determine the order status classes
-const getStatusClasses = (status) => {
-  switch (status) {
-    case "Delivered":
-      return "bg-green-50 text-green-700";
-    case "On the way":
-      return "bg-yellow-50 text-yellow-700";
-    case "Preparing":
-    default:
-      return "bg-slate-100 text-slate-700";
-  }
 };
 
 export default AdminOrder;
