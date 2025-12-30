@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearCart } from '../features/cartSlice/cartSlice';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import TopMenuBar from '../TopMenuBar/TopMenuBar';
 
 const CheckoutPage = () => {
     const router = useRouter();
@@ -61,61 +62,64 @@ const CheckoutPage = () => {
     if (items.length === 0) return <div className="p-20 text-center text-xl">Your cart is empty!</div>;
 
     return (
-        <div className="bg-slate-50 min-h-screen py-10">
-            <div className="max-w-4xl mx-auto px-4">
-                <h1 className="text-3xl font-bold mb-8 text-slate-800">Checkout</h1>
+        <>
+            <TopMenuBar />
+            <div className="bg-slate-50 min-h-screen py-10">
+                <div className="max-w-4xl mx-auto px-4">
+                    <h1 className="text-3xl font-bold mb-8 text-slate-800">Checkout</h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Left Side: Delivery Details Form */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                        <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
-                        <form className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600">Full Name</label>
-                                <input type="text" className="w-full mt-1 p-2 border rounded-lg outline-orange-500" placeholder="John Doe" required />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600">Phone Number</label>
-                                <input type="text" className="w-full mt-1 p-2 border rounded-lg outline-orange-500" placeholder="017XXXXXXXX" required />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600">Detailed Address</label>
-                                <textarea className="w-full mt-1 p-2 border rounded-lg outline-orange-500" rows="3" placeholder="House, Road, Area..." required></textarea>
-                            </div>
-                        </form>
-                    </div>
-
-                    {/* Right Side: Order Summary */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                        <h2 className="text-xl font-semibold mb-4">Your Order</h2>
-                        <div className="space-y-3 mb-6">
-                            {items.map((item) => (
-                                <div key={item.item_id} className="flex justify-between text-sm">
-                                    <span className="text-slate-600">{item.name} x {item.quantity}</span>
-                                    <span className="font-medium">TK {item.price * item.quantity}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Left Side: Delivery Details Form */}
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                            <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
+                            <form className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-600">Full Name</label>
+                                    <input type="text" className="w-full mt-1 p-2 border rounded-lg outline-orange-500" placeholder="John Doe" required />
                                 </div>
-                            ))}
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-600">Phone Number</label>
+                                    <input type="text" className="w-full mt-1 p-2 border rounded-lg outline-orange-500" placeholder="017XXXXXXXX" required />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-600">Detailed Address</label>
+                                    <textarea className="w-full mt-1 p-2 border rounded-lg outline-orange-500" rows="3" placeholder="House, Road, Area..." required></textarea>
+                                </div>
+                            </form>
                         </div>
 
-                        <div className="border-t pt-4 space-y-2">
-                            <div className="flex justify-between font-bold text-lg">
-                                <span>Total</span>
-                                <span className="text-orange-600">TK {subtotal}</span>
+                        {/* Right Side: Order Summary */}
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-fit">
+                            <h2 className="text-xl font-semibold mb-4">Your Order</h2>
+                            <div className="space-y-3 mb-6">
+                                {items.map((item) => (
+                                    <div key={item.item_id} className="flex justify-between text-sm">
+                                        <span className="text-slate-600">{item.name} x {item.quantity}</span>
+                                        <span className="font-medium">TK {item.price * item.quantity}</span>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
 
-                        <button
-                            onClick={handlePlaceOrder}
-                            disabled={loading}
-                            className={`w-full mt-6 py-3 rounded-full font-bold text-white transition-all 
+                            <div className="border-t pt-4 space-y-2">
+                                <div className="flex justify-between font-bold text-lg">
+                                    <span>Total</span>
+                                    <span className="text-orange-600">TK {subtotal}</span>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={handlePlaceOrder}
+                                disabled={loading}
+                                className={`w-full mt-6 py-3 rounded-full font-bold text-white transition-all 
                                 ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600 shadow-lg shadow-orange-100'}`}
-                        >
-                            {loading ? 'Processing...' : 'Confirm Order'}
-                        </button>
+                            >
+                                {loading ? 'Processing...' : 'Confirm Order'}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

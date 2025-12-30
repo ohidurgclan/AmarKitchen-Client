@@ -12,6 +12,7 @@ import Dashboard from "./Dashboard";
 import Revenue from "./Revenue";
 import Reviews from "./Reviews";
 import FullTransaction from "./FullTransaction";
+import SignOutButton from "../AuthForms/SignupButton";
 
 // ===================== SAMPLE DATA (later replace with DB/API) =====================
 
@@ -34,7 +35,7 @@ const kitchensPendingSample = [
 ];
 
 // Kitchens (All Kitchens Table)
-const allKitchensSample = [
+const kitchens = [
   { id: "K-1001", name: "Chattogram Grill", rating: 4.6, status: "Active" },
   { id: "K-1002", name: "Sylhet Cafe House", rating: 3.9, status: "Inactive" },
   { id: "K-1003", name: "Dhaka Biryani House", rating: 4.2, status: "Active" },
@@ -57,11 +58,11 @@ const allRidersSample = [
   { id: "R-2004", name: "Sabbir Ahmed", rating: 4.0, status: "Active" },
 ];
 
-// Customers
-const customers = [
-  { id: "C-1001", name: "Rahim Uddin", email: "rahim@example.com", phone: "0123456789" },
-  { id: "C-1002", name: "Shama Akter", email: "shama@example.com", phone: "9876543210" },
-];
+// // Customers
+// const customers = [
+//   { id: "C-1001", name: "Rahim Uddin", email: "rahim@example.com", phone: "0123456789" },
+//   { id: "C-1002", name: "Shama Akter", email: "shama@example.com", phone: "9876543210" },
+// ];
 
 // Reports
 const kitchensReports = [
@@ -93,15 +94,35 @@ const revenueData = [
 const Page = () => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("dashboard");
-    const [orders, setOrders] = useState([]);
-    useEffect(() => {
-      async function fetchItems() {
-        const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
-        const data = await res.json();
-        setOrders(data.data);
-      }
-      fetchItems();
-    }, []);
+  const [orders, setOrders] = useState([]);
+  const [kitchens, setKitchens] = useState([]);
+  const [customers, setCustomer] = useState([]);
+  useEffect(() => {
+    async function fetchItems() {
+      const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
+      const data = await res.json();
+      setOrders(data.data);
+    }
+    fetchItems();
+  }, []);
+
+  useEffect(() => {
+    async function fetchKitchen() {
+      const res = await fetch("http://localhost:5085/v1/kitchen/allkitchens"); // via Next proxy
+      const data = await res.json();
+      setKitchens(data.data);
+    }
+    fetchKitchen();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCustomer() {
+      const res = await fetch("http://localhost:5085/v1/users/customer"); // via Next proxy
+      const data = await res.json();
+      setCustomer(data.data);
+    }
+    fetchCustomer();
+  }, []);
 
   const handleLogout = () => {
     router.push("/");
@@ -116,7 +137,7 @@ const Page = () => {
         return (
           <AdminKitchens
             kitchensPending={kitchensPendingSample}
-            allKitchens={allKitchensSample}
+            allKitchens={kitchens}
           />
         );
 
@@ -181,11 +202,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "dashboard"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "dashboard"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("dashboard")}
           >
             <span>🏠</span>
@@ -196,11 +216,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "orders"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "orders"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("orders")}
           >
             <span>🧾</span>
@@ -209,11 +228,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "kitchens"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "kitchens"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("kitchens")}
           >
             <span>🍽️</span>
@@ -222,11 +240,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "customers"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "customers"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("customers")}
           >
             <span>👥</span>
@@ -235,11 +252,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "riders"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "riders"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("riders")}
           >
             <span>🚴</span>
@@ -250,11 +266,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "settings"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "settings"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("settings")}
           >
             <span>⚙️</span>
@@ -263,11 +278,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "revenue"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "revenue"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("revenue")}
           >
             <span>📊</span>
@@ -276,11 +290,10 @@ const Page = () => {
 
           <button
             type="button"
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${
-              activeSection === "report"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left ${activeSection === "report"
                 ? "bg-orange-50 text-orange-600 font-semibold"
                 : "hover:bg-slate-50"
-            }`}
+              }`}
             onClick={() => setActiveSection("report")}
           >
             <span>📋</span>
@@ -318,9 +331,7 @@ const Page = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="hidden sm:inline-flex items-center gap-2 border border-orange-200 bg-white text-orange-600 text-xs md:text-sm font-semibold px-3 md:px-4 py-2 rounded-md hover:bg-orange-50">
-              🔄 Refresh
-            </button>
+            <SignOutButton />
             <button className="inline-flex items-center gap-2 bg-orange-500 text-white text-xs md:text-sm font-semibold px-3 md:px-4 py-2 rounded-md hover:bg-orange-600">
               ⚙ Admin Settings
             </button>

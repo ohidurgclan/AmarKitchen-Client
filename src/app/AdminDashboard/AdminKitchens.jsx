@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 
 const AdminKitchens = ({ kitchensPending = [], allKitchens = [] }) => {
+  
   return (
     <div className="space-y-8">
       {/* ================= Pending Approval ================= */}

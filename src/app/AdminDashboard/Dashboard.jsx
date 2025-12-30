@@ -76,53 +76,50 @@ const Dashboard = ({ orders, kitchens, ridersVerification, customers }) => {
           <table className="w-full text-xs md:text-sm text-left">
             <thead className="text-slate-500 border-b border-slate-100">
               <tr>
-                <th className="py-2 pr-4">Order</th>
-                <th className="py-2 pr-4">Customer</th>
-                <th className="py-2 pr-4">Kitchen</th>
-                <th className="py-2 pr-4">Status</th>
-                <th className="py-2 pr-4">Amount</th>
-                <th className="py-2 text-center">Actions</th>
+                <th className="py-2 px-4">Order ID</th>
+                <th className="py-2 px-4">Customer Name</th>
+                <th className="py-2 px-4">Item Name</th>
+                <th className="py-2 px-4">Quantity</th>
+                <th className="py-2 px-4">Amount</th>
+                <th className="py-2 px-4 text-center">Status</th>
               </tr>
             </thead>
 
             <tbody className="divide-y divide-slate-100">
-              {orders.map((order) => (
-                <tr key={order.id}>
-                  <td className="py-2 pr-4 font-mono text-xs">
-                    #{order.id}
-                  </td>
-                  <td className="py-2 pr-4">{order.customerName}</td>
-                  <td className="py-2 pr-4">{order.kitchenName}</td>
-                  <td className="py-2 pr-4">
-                    <span
-                      className={`inline-flex px-2 py-1 rounded-full text-[11px] ${getStatusClasses(
-                        order.status
-                      )}`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-2 pr-4 font-semibold">
-                    ৳ {order.amount}
-                  </td>
-                  <td className="py-2 text-center">
-                    <div className="inline-flex gap-1">
-                      <Link
-                        href={`/admin/orders/${order.id}`}
-                        className="rounded-lg bg-blue-600 px-3 py-1 text-[11px] font-medium text-white hover:bg-blue-700"
-                      >
-                        View
-                      </Link>
-                      <Link
-                        href={`/admin/orders/${order.id}/edit`}
-                        className="rounded-lg border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
-                      >
-                        Edit
-                      </Link>
-                    </div>
+              {orders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-8 px-4 text-center text-slate-500">
+                    No orders found.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                orders.map((order) => (
+                  <tr li key={order.order_id} className="hover:bg-slate-50">
+                    <td className="py-3 px-4 font-mono text-sm text-slate-800">
+                      #{order.order_id}
+                    </td>
+                    <td className="py-3 px-4">{order.user_name}</td>
+                    <td className="py-3 px-4">{order.item_name}</td>
+                    <td className="py-3 px-4">{order.quantity}</td>
+
+
+
+                    <td className="py-3 px-4 font-semibold text-slate-900">
+                      ৳ {Number(order.totalprice || 0).toLocaleString("en-BD")}
+                    </td>
+
+                    <td className="py-3 px-4">
+                      <span
+                        className={`inline-flex px-2 py-1 rounded-full text-[11px] ${getStatusClasses(
+                          order.totalprice
+                        )}`}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import SigninButton from "../AuthForms/SigninButton";
+import SignOutButton from "../AuthForms/SignupButton";
 
 const TopMenuBar = () => {
   const pathname = (usePathname() || "").toLowerCase();
@@ -72,8 +73,8 @@ const TopMenuBar = () => {
                 Sign Up
               </button>
             </Link>
-
             <SigninButton/>
+            <SignOutButton/>
 
             <Link href="/Cart">
               <button
