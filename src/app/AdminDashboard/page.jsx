@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import AdminOrder from "./AdminOrder";
@@ -17,13 +16,13 @@ import FullTransaction from "./FullTransaction";
 // ===================== SAMPLE DATA (later replace with DB/API) =====================
 
 // Orders
-const orders = [
-  { id: "AK-1001", customerName: "Hedayet Uddin", kitchenName: "Dhaka Biryani House", status: "Delivered", amount: 780 },
-  { id: "AK-1002", customerName: "Nusrat Jahan", kitchenName: "Pizza Point", status: "On the way", amount: 1250 },
-  { id: "AK-1003", customerName: "Hasan Mahmud", kitchenName: "Burger Hub", status: "Preparing", amount: 620 },
-  { id: "AK-1004", customerName: "Mahmud Khan", kitchenName: "Karaachi Dastarkhwan", status: "Preparing", amount: 620 },
-  { id: "AK-1005", customerName: "Sajib Hasan", kitchenName: "ZAIQA", status: "Preparing", amount: 620 },
-];
+// const orders = [
+//   { id: "AK-1001", customerName: "Hedayet Uddin", kitchenName: "Dhaka Biryani House", status: "Delivered", amount: 780 },
+//   { id: "AK-1002", customerName: "Nusrat Jahan", kitchenName: "Pizza Point", status: "On the way", amount: 1250 },
+//   { id: "AK-1003", customerName: "Hasan Mahmud", kitchenName: "Burger Hub", status: "Preparing", amount: 620 },
+//   { id: "AK-1004", customerName: "Mahmud Khan", kitchenName: "Karaachi Dastarkhwan", status: "Preparing", amount: 620 },
+//   { id: "AK-1005", customerName: "Sajib Hasan", kitchenName: "ZAIQA", status: "Preparing", amount: 620 },
+// ];
 
 // Kitchens (Pending Approval)
 const kitchensPendingSample = [
@@ -94,6 +93,15 @@ const revenueData = [
 const Page = () => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("dashboard");
+    const [orders, setOrders] = useState([]);
+    useEffect(() => {
+      async function fetchItems() {
+        const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
+        const data = await res.json();
+        setOrders(data.data);
+      }
+      fetchItems();
+    }, []);
 
   const handleLogout = () => {
     router.push("/");

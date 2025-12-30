@@ -4,7 +4,7 @@
 import React from "react";
 import Link from "next/link";
 
-const AdminOrder = ({ orders = [] }) => {
+const AdminOrder = () => {
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 border border-orange-50">
       <h2 className="text-xl font-semibold text-slate-900 mb-4">Orders</h2>

@@ -103,7 +103,7 @@ const Dashboard = ({ orders, kitchens, ridersVerification, customers }) => {
                     </span>
                   </td>
                   <td className="py-2 pr-4 font-semibold">
-                    ৳ {order.amount.toLocaleString("en-BD")}
+                    ৳ {order.amount}
                   </td>
                   <td className="py-2 text-center">
                     <div className="inline-flex gap-1">

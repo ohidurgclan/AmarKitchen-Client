@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
+import SigninButton from "../AuthForms/SigninButton";
 
 const TopMenuBar = () => {
   const pathname = (usePathname() || "").toLowerCase();
@@ -66,17 +67,13 @@ const TopMenuBar = () => {
 
           {/* Auth + Cart */}
           <div className="flex items-center gap-3">
-            <Link href="/SigninSelectionPage">
+            <Link href="/AuthForms">
               <button className="border border-orange-500 bg-white text-orange-600 text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-50 transition">
-                Sign In
-              </button>
-            </Link>
-
-            <Link href="/SignupSelectionPage">
-              <button className="bg-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-orange-600 transition">
                 Sign Up
               </button>
             </Link>
+
+            <SigninButton/>
 
             <Link href="/Cart">
               <button
