@@ -34,7 +34,7 @@ const kitchensPendingSample = [
 ];
 
 // Kitchens (All Kitchens Table)
-const allKitchensSample = [
+const kitchens = [
   { id: "K-1001", name: "Chattogram Grill", rating: 4.6, status: "Active" },
   { id: "K-1002", name: "Sylhet Cafe House", rating: 3.9, status: "Inactive" },
   { id: "K-1003", name: "Dhaka Biryani House", rating: 4.2, status: "Active" },
@@ -57,11 +57,11 @@ const allRidersSample = [
   { id: "R-2004", name: "Sabbir Ahmed", rating: 4.0, status: "Active" },
 ];
 
-// Customers
-const customers = [
-  { id: "C-1001", name: "Rahim Uddin", email: "rahim@example.com", phone: "0123456789" },
-  { id: "C-1002", name: "Shama Akter", email: "shama@example.com", phone: "9876543210" },
-];
+// // Customers
+// const customers = [
+//   { id: "C-1001", name: "Rahim Uddin", email: "rahim@example.com", phone: "0123456789" },
+//   { id: "C-1002", name: "Shama Akter", email: "shama@example.com", phone: "9876543210" },
+// ];
 
 // Reports
 const kitchensReports = [
@@ -94,6 +94,8 @@ const Page = () => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("dashboard");
     const [orders, setOrders] = useState([]);
+    const [kitchens,setKitchens] = useState([]);
+    const [customers,setCustomer] = useState([]);
     useEffect(() => {
       async function fetchItems() {
         const res = await fetch("http://localhost:5085/v1/order/getOrdersforAdmin"); // via Next proxy
@@ -101,6 +103,24 @@ const Page = () => {
         setOrders(data.data);
       }
       fetchItems();
+    }, []);
+
+    useEffect(() => {
+      async function fetchKitchen() {
+        const res = await fetch("http://localhost:5085/v1/kitchen/allkitchens"); // via Next proxy
+        const data = await res.json();
+        setKitchens(data.data);
+      }
+      fetchKitchen();
+    }, []);
+
+    useEffect(() => {
+      async function fetchCustomer() {
+        const res = await fetch("http://localhost:5085/v1/users/customer"); // via Next proxy
+        const data = await res.json();
+        setCustomer(data.data);
+      }
+      fetchCustomer();
     }, []);
 
   const handleLogout = () => {
@@ -116,7 +136,7 @@ const Page = () => {
         return (
           <AdminKitchens
             kitchensPending={kitchensPendingSample}
-            allKitchens={allKitchensSample}
+            allKitchens={kitchens}
           />
         );
 
